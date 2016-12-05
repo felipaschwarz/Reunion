@@ -1,0 +1,25 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  arrival_on: MyString
+  departure_on: MyString
+  address_1: MyString
+  address_2: MyString
+  city: MyString
+  state: MyString
+  country: MyString
+  h_lat: MyString
+  h_long: MyString
+  user_id: MyString
+
+two:
+  arrival_on: MyString
+  departure_on: MyString
+  address_1: MyString
+  address_2: MyString
+  city: MyString
+  state: MyString
+  country: MyString
+  h_lat: MyString
+  h_long: MyString
+  user_id: MyString
