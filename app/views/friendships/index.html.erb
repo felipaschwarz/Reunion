@@ -1,0 +1,56 @@
+<h2><%= current_user.username %>!</h2>
+
+<p>
+<strong>Email:</strong> <%= current_user.email %>
+</p>
+
+<section>
+  <h3>Users:</h3>
+	<%= form_tag(users_path, class: 'js-search-form') do %>
+	  <%= label_tag "Search for:" %>
+	  <%= text_field_tag :search, params[:search], placeholder: "Search Users", class: 'js-search-name'%>
+ 		<%= submit_tag("Search")  %>
+	<% end %>
+
+	<div id="searchResult"></div>
+
+</section>
+
+<section>
+  <h3>All Users:</h3>
+	<ul>
+		<% @users.each do |u| %>
+	        <li>
+		        <%= u.username %>
+		        <%= link_to "Add", user_friendships_path(friend_id: u.id), method: :post %>
+	        </li>
+	  <% end %>
+	</ul>
+</section>
+
+<section>
+  <h3>Friends:</h3>
+	<ul>
+		<% @friends.each do |f| %>
+	        <li>
+		        <%= f.friend.username %>
+		        <%= link_to "Delete", user_friendship_path(current_user.id, f), method: :delete %>
+	        </li>
+	  <% end %>
+	</ul>
+</section>
+
+<section>
+  <h3>Friendrequests:</h3>
+	<ul>
+		<% @friendrequests.each do |fr| %>
+	        <li>
+		        <%= fr.friend.username %>
+		        <%= link_to "Accept", user_friendship_path(current_user, fr.id), method: :put%>
+		        <%= link_to "Decline", user_friendship_path(current_user, fr.id), method: :delete%>
+	        </li>
+	  <% end %>
+	</ul>
+</section>
+
+<%= link_to 'Back', profile_path %>

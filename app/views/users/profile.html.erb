@@ -1,6 +1,57 @@
 <h2><%= current_user.username %>!</h2>
 
-
 <p>
 <strong>Email:</strong> <%= current_user.email %>
 </p>
+
+<% @current_user.home %>
+
+<%= form_for([@user], class: 'js-form')  do |f| %>
+  <div class="row">
+    <div class="form-group place-form">
+      <%= f.label :home %><br />
+      <%= f.text_field :home, :class => 'js-search-home form-control' %>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="form-group col-md-6 dates-form">
+      <%= f.label :lat %><br>
+      <%= f.text_field :lat, :class => 'form-control' %>
+    </div>
+
+    <div class="form-group col-md-6 dates-form">
+      <%= f.label :lng %><br>
+      <%= f.text_field :lng, :class => 'form-control' %>
+    </div>
+  </div>
+
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>
+
+<table class="table">
+  <thead class="thead-inverse">
+    <tr>
+        <th>From</th>
+        <th>To</th>
+        <th>Destination</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @current_user.destinations.each do |d| %>
+      <tr>       
+        <td><%= d.arrival_on %></td>
+        <td><%= d.departure_on %></td>
+        <td><%= d.place %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<%= link_to 'Add Destination', new_user_destination_path(:user_id => current_user.id) %>
+
+<%= link_to 'Friends', user_friendships_path(:user_id => current_user.id) %>
+
+<%= link_to 'Map', user_map_path(:user_id => current_user.id) %>

@@ -8,18 +8,25 @@
 users = User.create([
 	{username: 'fschwarziii',
 	firstname: 'Felipa', lastname: 'Schwarz',
-	address_1: 'Am Brühlbach 14', city: 'Göppingen', country: 'Germany',
 	email: 'felipaschwarz@gmail.com',
-	password: 'hello12345678', password_confirmation: 'hello12345678'},
+	password: '12345678', password_confirmation: '12345678'},
 
 	{username: 'vschwarz',
 	firstname: 'Vincent', lastname: 'Schwarz',
-	address_1: 'Seitzstraße 9', address_2: '3. Stock', city: 'München', state: 'Bayern', country: 'Germany',
 	email: 'vinc@gmail.com',
-	password: 'abc12345678', password_confirmation: 'abc12345678'},
+	password: '12345678', password_confirmation: '12345678'},
 
 	{username: 'lenad',
 	firstname: 'Lena', lastname: 'Dittrich',
-	address_1: 'Calle de Ayala 16', city: 'Madrid', country: 'Spain',
 	email: 'lena@dittrich.com',
-	password: 'password123', password_confirmation: 'password123'}])
+	password: '12345678', password_confirmation: '12345678'},
+
+	{username: 'nikos',
+	firstname: 'Nikos', lastname: 'Schwarz',
+	email: 'n@s.com',
+	password: '12345678', password_confirmation: '12345678'},
+
+	{username: 'laurins',
+	firstname: 'Laurin', lastname: 'Summer',
+	email: 'l@s.com',
+	password: '12345678', password_confirmation: '12345678'}])

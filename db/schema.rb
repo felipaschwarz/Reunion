@@ -10,21 +10,31 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161205134733) do
+ActiveRecord::Schema.define(version: 20161212145325) do
+
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
 
   create_table "destinations", force: :cascade do |t|
     t.string   "arrival_on"
     t.string   "departure_on"
-    t.string   "address_1"
-    t.string   "address_2"
-    t.string   "city"
-    t.string   "state"
-    t.string   "country"
-    t.string   "h_lat"
-    t.string   "h_long"
     t.string   "user_id"
     t.datetime "created_at",   null: false
     t.datetime "updated_at",   null: false
+    t.string   "place"
+    t.float    "lat"
+    t.float    "lng"
+  end
+
+  create_table "friendships", force: :cascade do |t|
+    t.integer  "user_id"
+    t.integer  "friend_id"
+    t.string   "status"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["friend_id"], name: "index_friendships_on_friend_id", using: :btree
+    t.index ["user_id", "friend_id"], name: "index_friendships_on_user_id_and_friend_id", unique: true, using: :btree
+    t.index ["user_id"], name: "index_friendships_on_user_id", using: :btree
   end
 
   create_table "users", force: :cascade do |t|
@@ -33,13 +43,6 @@ ActiveRecord::Schema.define(version: 20161205134733) do
     t.string   "lastname"
     t.string   "email"
     t.string   "password"
-    t.string   "address_1"
-    t.string   "address_2"
-    t.string   "city"
-    t.string   "state"
-    t.string   "country"
-    t.string   "h_lat"
-    t.string   "h_long"
     t.datetime "created_at",                          null: false
     t.datetime "updated_at",                          null: false
     t.string   "encrypted_password",     default: "", null: false
@@ -51,7 +54,11 @@ ActiveRecord::Schema.define(version: 20161205134733) do
     t.datetime "last_sign_in_at"
     t.string   "current_sign_in_ip"
     t.string   "last_sign_in_ip"
-    t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
+    t.string   "home"
+    t.float    "lat"
+    t.float    "lng"
+    t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
   end
 
+  add_foreign_key "friendships", "users"
 end

@@ -1,0 +1,9 @@
+<h1>All Destinations</h1>
+
+<ul>
+	<% @destinations.each do |d| %>
+        <li>From: <%= d.arrival_on %> | To: <%= d.departure_on %> | Place: <%= d.place %></li>
+  <% end %>
+</ul>
+
+<%= link_to 'Profile', profile_path %>

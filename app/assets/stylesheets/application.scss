@@ -1,0 +1,115 @@
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, vendor/assets/stylesheets,
+ * or any plugin's vendor/assets/stylesheets directory can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the bottom of the
+ * compiled file so the styles you add here take precedence over styles defined in any other CSS/SCSS
+ * files in this directory. Styles in this file should be added after the last require_* statement.
+ * It is generally better to create a new file per style scope.
+ */
+@import "bootstrap-sprockets";
+@import "bootstrap";
+
+.navbar {
+	position: fixed;
+	top: 0px;
+	min-height: 70px;
+  background-color: #000;
+}
+
+.navbar-brand img{
+	width: 170px;
+}
+
+.section {
+  min-height: 30vw;
+  margin-top: 10vw;
+}
+.header {
+	padding-top: 100px;
+	padding-bottom: 100px;
+	text-align: center;
+  color: #fff;
+  height: 100%;
+  min-height: 700px;
+  position: relative;
+  background-image: linear-gradient(rgba(252, 223, 62, 0.9), rgba(252, 223, 62, 0.9)),  url("/assets/cheers.jpg");
+  //background-image: linear-gradient(rgba(252, 223, 62, 0.6), rgba(0, 0, 0, 0.6)),  url("/assets/cheers.jpg");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+}
+
+.header-logo {
+  padding-top: 100px;
+	width: 700px;
+}
+
+.text-content h1 {
+  padding: inherit;
+	font-family: 'Roboto Condensed', sans-serif;
+	font-size: 50px;
+  text-align: center;
+}
+
+.registration-section {
+
+}
+
+.registration-input {
+  border: solid 3px #DCBD23;
+  border-radius: 10px;
+  margin: 20px;
+  width: 400px;
+  height: 50px;
+  background-color: rgba(252, 223, 62, 0.8);
+  color: #FFF;
+  margin-top: 50px;
+  text-align: center;
+}
+
+.registration-input:focus {
+  outline: 0 none;
+}
+
+.registration-input::-webkit-input-placeholder {
+  color: #FFFFFF;
+  size: 30px;
+}
+
+.registration-input-submit {
+  border: solid 3px #000;
+  border-radius: 10px;
+  margin: 20px;
+  width: 400px;
+  height: 50px;
+  background-color: rgba(252, 223, 62, 0.8);
+  color: #FFF;
+  margin-top: 50px;
+  text-align: center;
+}
+
+.dates-form {
+  padding: 25px 50px;
+}
+
+.place-form {
+  padding: 25px 50px;
+}
+
+.from-to-date-row {
+  padding-top: 70px;
+}
+
+.form-control {
+  margin: 10px;
+}
+
+#map {
+  height: 450px;
+  width: 100%;
+}

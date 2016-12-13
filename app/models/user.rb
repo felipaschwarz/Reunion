@@ -1,8 +1,14 @@
 class User < ApplicationRecord
-  # later add: :confirmable
-  devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :trackable, :validatable
 	has_many :destinations
-	validates_uniqueness_of :username, :email
-	validates_presence_of :username, :firstname, :lastname, :city, :country, on: :create
+	has_many :friendships, dependent: :destroy
+  has_many :friends, through: :friendships #, dependent: :destroy
+
+	#:confirmable
+	devise :database_authenticatable, :registerable, :recoverable, :rememberable, :trackable, :validatable
+	
+	validates_presence_of :username, :firstname, :lastname, on: :create
+
+	validates :username, length: { maximum: 50 }, uniqueness: true
+	validates :password, length: { minimum: 8 }
+
 end

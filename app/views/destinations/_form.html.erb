@@ -1,0 +1,47 @@
+<%= form_for([@user, @destination], class: 'js-form')  do |f| %>
+  <% if @destination.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@destination.errors.count, "error") %> prohibited this destination from being saved:</h2>
+
+      <ul>
+      <% @destination.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <div class="row">
+    <div class="form-group col-md-6 dates-form">
+      <%= f.label :arrival_on %><br>
+      <%= f.date_field :arrival_on, :class => 'form-control' %>
+    </div>
+
+    <div class="form-group col-md-6 dates-form">
+      <%= f.label :departure_on %><br>
+      <%= f.date_field :departure_on, :class => 'form-control' %>
+    </div>
+  </div>
+  
+  <div class="row">
+    <div class="form-group place-form">
+      <%= f.label :place %><br />
+      <%= f.text_field :place, :class => 'js-search-place form-control' %>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="form-group col-md-6 dates-form">
+      <%= f.label :lat %><br>
+      <%= f.text_field :lat, :class => 'form-control' %>
+    </div>
+
+    <div class="form-group col-md-6 dates-form">
+      <%= f.label :lng %><br>
+      <%= f.text_field :lng, :class => 'form-control' %>
+    </div>
+  </div>
+
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

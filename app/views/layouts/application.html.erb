@@ -3,25 +3,40 @@
   <head>
     <title>Reunion</title>
     <%= csrf_meta_tags %>
+    <script src="https://maps.googleapis.com/maps/api/js?v=3.21&libraries=places,geometry&key=AIzaSyB-hfUTiHosONxH5Br6t96xaN4ZkhxSfWQ"></script>
+
 
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
 
   <body>
-     <p class="notice"><%= notice %></p>
-   	 <p class="alert"><%= alert %></p>
+    <% unless notice.nil? %>
+      <div class="notice alert alert-success"><%= notice %></div>
+    <% end %>
+    <% unless alert.nil? %>
+      <div class="alert alert-warning"><%= alert %></div>
+    <% end %>
 
-     <div id="top_bar">
-      <% if user_signed_in? %>
-        <p><%= link_to 'Sign out', destroy_user_session_path, method: 'DELETE' %></p>
-      <% else %>
-        <p>
-          <%= link_to 'Sign_up', new_user_registration_path %> | 
-          <%= link_to 'Sign_in', new_user_session_path %>
-        </p>
-      <% end %>
-    </div>
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container-fluid">
+        
+        <a class="navbar-brand" href="/">
+          <img alt="REUNION" src="/assets/logo.png">
+        </a>
+
+        <ul class="nav navbar-nav navbar-right">
+          <% if user_signed_in? %>
+            <li><%= link_to 'Logout', destroy_user_session_path, method: 'DELETE' %></li>
+          <% else %>
+            <li><%= link_to 'Register', new_user_registration_path %></li>
+            <li><%= link_to 'Login', new_user_session_path %></li>
+          <% end %>
+        </ul>
+        
+      </div>
+    </nav>
+    
     <%= yield %>
   </body>
 </html>

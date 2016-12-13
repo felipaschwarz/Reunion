@@ -1,5 +1,5 @@
 class DestinationsController < ApplicationController
-	
+
 	def index
 		@destinations = Destination.all
 	end
@@ -9,7 +9,8 @@ class DestinationsController < ApplicationController
 	end
 
 	def new
-		@destination = Destination.new
+		@user = User.find(params[:user_id])
+		@destination = @user.destinations.new
 	end
 
 	def edit
@@ -17,11 +18,12 @@ class DestinationsController < ApplicationController
 	end
 
 	def create
-		@destination = Destination.new(destination_params)
+		@user = User.find(params[:user_id])
+		@destination = @user.destinations.new(destination_params) 
 
 		respond_to do |format|
-			if @destination.save
-				format.html { redirect_to @destination, notice: 'Destination was successfully created.' }
+			if @destination.save 
+				format.html { redirect_to profile_path, notice: 'Destination was successfully created.' }
 			else
 				format.html { render :new }
 			end
@@ -30,7 +32,6 @@ class DestinationsController < ApplicationController
 
 	def update
 		@destination = Destination.find(params[:id])
-		
 		respond_to do |format|
 			if @destination.update(task_params)
 				format.html { redirect_to @destination, notice: 'Destination was successfully updated.' }
@@ -49,9 +50,21 @@ class DestinationsController < ApplicationController
 		end
 	end
 
+	def showmap
+		friendships = current_user.friendships.where(status: 'accepted')
+		friends = friendships.map {|fs| fs.friend }
+		destinations = friends.map do |f|
+			binding.pry
+			f.destinations.where(
+				Date.parse(params[:from_date], "%Y%m%d") <= Date.parse(f.destinations.arrival_on, '%Y%m%d'),
+				Date.parse(params[:to_date], "%Y%m%d") >= Date.parse(f.destination.departure_on, '%Y%m%d')
+				)
+		end
+	end
+
   private
 
     def destination_params
-      params.require(:destination).permit( :arrival_on, :departure_on, :address_1, :address_2, :city, :state, :country)
+      params.require(:destination).permit(:arrival_on, :departure_on, :place, :lat, :lng)
     end
 end
