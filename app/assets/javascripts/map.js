@@ -1,84 +1,95 @@
+var map;
+var markers = [];
+
 function initMap() {
-  console.log("hi felipa")
   var myLatLng = {lat: 47.776818, lng: 9.277509};
 
-  var map = new google.maps.Map(document.getElementById('map'), {
+  map = new google.maps.Map(document.getElementById('map'), {
     zoom: 4,
     center: myLatLng
   });
+}
 
-  var locations = [
-      ['Bondi Beach', -33.890542, 151.274856, 4],
-      ['Coogee Beach', -33.923036, 151.259052, 5],
-      ['Cronulla Beach', -34.028249, 151.157507, 3],
-      ['Manly Beach', -33.80010128657071, 151.28747820854187, 2],
-      ['Maroubra Beach', -33.950198, 151.259302, 1]
-    ];
+function addMarkers(destinations) {
+  var marker,
+  infowindow = new google.maps.InfoWindow();
+  //infowindow = new google.maps.InfoWindow();
 
-  var marker, infowindow, i;
-
-  for (i = 0; i < locations.length; i++) {  
+  for (var i = 0; i < destinations.length; i++) { 
+  console.log(destinations[i]);
     marker = new google.maps.Marker({
-      position: new google.maps.LatLng(locations[i][1], locations[i][2]),
-      map: map
+      position: {lat: destinations[i].lng, lng: destinations[i].lat},
+      map: map,
+      title: destinations[i].arrival_on,
+      animation: google.maps.Animation.DROP
     });
+    
+    google.maps.event.addListener(marker, 'click', (function(marker, i) {
+      return function() {
+        infowindow.setContent(destinations[i].arrival_on);
+        infowindow.open(map, marker);
+      }
+    })(marker, i));
 
-    infowindow = new google.maps.InfoWindow({
-      content: '<h1>Uluru</h1>'
-    });
+    markers.push(marker);
+
   }
 }
 
-function handleSuccess(destinations) {
-  console.log(destinations);
-};
+
+function deleteMarkers() {
+  for (var i = 0; i < markers.length; i++) {
+    markers[i].setMap(null);
+  }
+}
 
 function handleError(error) {
   console.log("Error!");
   console.log(error);
 };
 
-      function drawMap() {
-        console.log('drawMap')
-        var map;
-        if ("geolocation" in navigator){
-          navigator.geolocation.getCurrentPosition(onLocation, offLocation);
-        }
-      }
-
-      function onLocation(position){
-        var myPosition = {
-          lat: position.coords.latitude,
-          lng: position.coords.longitude
-        };
-        createMap(myPosition);
-      }
-
-      function offLocation(){
-        var myPosition = {lat: 47.776818, lng: 9.277509};
-        createMap(myPosition);
-      }
-
-      function createMap(position){
-        map = new google.maps.Map($('#map')[0], {
-          center: position,
-          zoom: 6
-      });
-      }
 
 $(document).on("turbolinks:load", function () {
   initMap();
-  
   $("#marker-request").on("click", function (event) {
     event.preventDefault();
+    deleteMarkers();
     console.log("submit works");
-
     $.ajax({
-      url: user_map_path,
-      data: destinations,
-      success: handleSuccess,
+      type: "POST",
+      url: '/users/1/map',
+      data:{from_date: $("#from_date").val(), to_date: $("#to_date").val()},
+      success: addMarkers,
       error: handleError
     });
 
   });
 });
+
+      // function drawMap() {
+      //   console.log('drawMap')
+      //   var map;
+      //   if ("geolocation" in navigator){
+      //     navigator.geolocation.getCurrentPosition(onLocation, offLocation);
+      //   }
+      // }
+
+      // function onLocation(position){
+      //   var myPosition = {
+      //     lat: position.coords.latitude,
+      //     lng: position.coords.longitude
+      //   };
+      //   createMap(myPosition);
+      // }
+
+      // function offLocation(){
+      //   var myPosition = {lat: 47.776818, lng: 9.277509};
+      //   createMap(myPosition);
+      // }
+
+      // function createMap(position){
+      //   map = new google.maps.Map($('#map')[0], {
+      //     center: position,
+      //     zoom: 6
+      // });
+      // }

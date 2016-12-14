@@ -50,17 +50,19 @@ class DestinationsController < ApplicationController
 		end
 	end
 
-	def showmap
+	def request_trips
 		friendships = current_user.friendships.where(status: 'accepted')
 		friends = friendships.map {|fs| fs.friend }
 		destinations = friends.map do |f|
-			binding.pry
-			f.destinations.where(
-				Date.parse(params[:from_date], "%Y%m%d") <= Date.parse(f.destinations.arrival_on, '%Y%m%d'),
-				Date.parse(params[:to_date], "%Y%m%d") >= Date.parse(f.destination.departure_on, '%Y%m%d')
-				)
-		end
+			f.destinations.where("departure_on >= ?", params[:from_date]).where("arrival_on <= ?", params[:to_date])
+		end #.flatten
+		binding.pry
+
+		render json: destinations, status: 200
 	end
+
+
+
 
   private
 
